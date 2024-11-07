@@ -45,11 +45,37 @@ class HomePage extends StatelessWidget {
             return const LoginView();
           } else {
             print('You need to verify your email first');
+            return const VerifyEmailView();
           }
 
           return const RegisterView();
         },
       ),
+    );
+  }
+}
+
+class VerifyEmailView extends StatefulWidget {
+  const VerifyEmailView({super.key});
+
+  @override
+  State<VerifyEmailView> createState() => _VerifyEmailViewState();
+}
+
+class _VerifyEmailViewState extends State<VerifyEmailView> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Text('Please verify your email first'),
+        TextButton(
+          onPressed: () async {
+            var user = FirebaseAuth.instance.currentUser;
+            await user?.sendEmailVerification();
+          },
+          child: const Text('Send email verification'),
+        )
+      ],
     );
   }
 }
