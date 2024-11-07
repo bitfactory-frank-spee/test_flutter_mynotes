@@ -15,6 +15,10 @@ void main() {
         useMaterial3: true,
       ),
       home: const HomePage(),
+      routes: {
+        '/login/': (context) => const LoginView(),
+        '/register/': (context) => const RegisterView(),
+      },
     ),
   );
 }
@@ -24,33 +28,28 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
+    return FutureBuilder(
+      future: Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+      builder: (context, snapshot) {
+        if (snapshot.connectionState != ConnectionState.done) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
 
-          var user = FirebaseAuth.instance.currentUser;
-          if (user?.emailVerified ?? false) {
-            print('You are a verified user');
-            return const LoginView();
-          } else {
-            print('You need to verify your email first');
-            return const VerifyEmailView();
-          }
+        var user = FirebaseAuth.instance.currentUser;
+        if (user?.emailVerified ?? false) {
+          print('You are a verified user');
+          return const LoginView();
+        } else {
+          print('You need to verify your email first');
+          return const VerifyEmailView();
+        }
 
-          return const RegisterView();
-        },
-      ),
+        return const RegisterView();
+      },
     );
   }
 }
@@ -65,17 +64,22 @@ class VerifyEmailView extends StatefulWidget {
 class _VerifyEmailViewState extends State<VerifyEmailView> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text('Please verify your email first'),
-        TextButton(
-          onPressed: () async {
-            var user = FirebaseAuth.instance.currentUser;
-            await user?.sendEmailVerification();
-          },
-          child: const Text('Send email verification'),
-        )
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Verify Email'),
+      ),
+      body: Column(
+        children: [
+          const Text('Please verify your email first'),
+          TextButton(
+            onPressed: () async {
+              var user = FirebaseAuth.instance.currentUser;
+              await user?.sendEmailVerification();
+            },
+            child: const Text('Send email verification'),
+          )
+        ],
+      ),
     );
   }
 }
