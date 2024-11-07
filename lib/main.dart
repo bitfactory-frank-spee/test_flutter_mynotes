@@ -43,16 +43,35 @@ class HomePage extends StatelessWidget {
         var user = FirebaseAuth.instance.currentUser;
         if (user != null) {
           if (user.emailVerified) {
-            print('You are a verified user');
+            return const NotesView();
           } else {
             return const VerifyEmailView();
           }
         } else {
           return const LoginView();
         }
-
-        return const Text('Done');
       },
+    );
+  }
+}
+
+class NotesView extends StatefulWidget {
+  const NotesView({super.key});
+
+  @override
+  State<NotesView> createState() => _NotesViewState();
+}
+
+class _NotesViewState extends State<NotesView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My Notes'),
+      ),
+      body: const Center(
+        child: Text('Your notes will be displayed here'),
+      ),
     );
   }
 }
