@@ -1,3 +1,5 @@
+import 'dart:developer' as devtools show log;
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -62,12 +64,12 @@ class _LoginViewState extends State<LoginView> {
                   email: email,
                   password: password,
                 );
-                print(userCredential);
+                devtools.log(userCredential.toString());
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'invalid-credential') {
-                  print('Invalid credentials provided.');
+                  devtools.log('Invalid credentials provided.');
                 } else {
-                  print('Something bad happened: ${e.code}');
+                  devtools.log('Something bad happened: ${e.code}');
                 }
               }
             },
