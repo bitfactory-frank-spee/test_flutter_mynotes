@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "32929408261",
+    "project_id": "test-flutter-mynotes-e9f1c",
+    "storage_bucket": "test-flutter-mynotes-e9f1c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32929408261:android:d6c836c96357203377c36c",
+        "android_client_info": {
+          "package_name": "nl.bitfactory"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBksDphnlNWSXPRTrpdx4EjiUzykVV1fB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32929408261:android:54e908a6f0c9b3ea77c36c",
+        "android_client_info": {
+          "package_name": "nl.bitfactory.test_flutter_mynotes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBksDphnlNWSXPRTrpdx4EjiUzykVV1fB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
