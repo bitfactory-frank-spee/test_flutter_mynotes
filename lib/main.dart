@@ -1,3 +1,5 @@
+import 'dart:developer' as devtools show log;
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +57,8 @@ class HomePage extends StatelessWidget {
   }
 }
 
+enum MenuAction { logout }
+
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
 
@@ -69,12 +73,16 @@ class _NotesViewState extends State<NotesView> {
       appBar: AppBar(
         title: const Text('My Notes'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-            },
-          )
+          PopupMenuButton<MenuAction>(onSelected: (value) {
+            devtools.log(value.toString());
+          }, itemBuilder: (context) {
+            return const [
+              PopupMenuItem<MenuAction>(
+                value: MenuAction.logout,
+                child: Text('Log out'),
+              ),
+            ];
+          }),
         ],
       ),
       body: const Center(
