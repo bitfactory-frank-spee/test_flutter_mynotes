@@ -2,6 +2,7 @@ import 'dart:developer' as devtools show log;
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:test_flutter_mynotes/constants/routes.dart';
+import 'package:test_flutter_mynotes/utilities/show_error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -59,22 +60,35 @@ class _RegisterViewState extends State<RegisterView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                final userCredential =
-                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                await FirebaseAuth.instance.createUserWithEmailAndPassword(
                   email: email,
                   password: password,
                 );
-                devtools.log(userCredential.toString());
+                final user = FirebaseAuth.instance.currentUser;
+                await user?.sendEmailVerification();
+                Navigator.of(context).pushNamed(verifyEmailRoute);
               } on FirebaseAuthException catch (e) {
-                if (e.code == 'weak-password') {
-                  devtools.log('The password provided is too weak.');
-                } else if (e.code == 'email-already-in-use') {
-                  devtools.log('The account already exists for that email.');
-                } else if (e.code == 'invalid-email') {
-                  devtools.log('The email provided is invalid.');
-                } else {
-                  devtools.log('Something bad happened: ${e.code}');
+                var errorMessage =
+                    'An error occurred while trying to log in: ${e.code}';
+                switch (e.code) {
+                  case 'weak-password':
+                    errorMessage = 'The password provided is too weak.';
+                    break;
+                  case 'email-already-in-use':
+                    errorMessage = 'The email provided is already in use.';
+                    break;
+                  case 'invalid-email':
+                    errorMessage = 'The email provided is invalid.';
+                    break;
+                  case 'channel-error':
+                    errorMessage = 'Email and password are required.';
                 }
+                await showErrorDialog(context, errorMessage);
+              } catch (e) {
+                showErrorDialog(
+                  context,
+                  'An error occurred while trying to register: $e',
+                );
               }
             },
             child: const Text('Register'),
