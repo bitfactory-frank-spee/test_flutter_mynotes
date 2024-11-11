@@ -66,32 +66,44 @@ class _RegisterViewState extends State<RegisterView> {
                   password: password,
                 );
                 await AuthService.firebase().sendEmailVerification();
-                Navigator.of(context).pushNamed(verifyEmailRoute);
+                if (context.mounted) {
+                  Navigator.of(context).pushNamed(verifyEmailRoute);
+                }
               } on WeakPasswordAuthException {
-                await showErrorDialog(
-                  context,
-                  'The password provided is too weak.',
-                );
+                if (context.mounted) {
+                  await showErrorDialog(
+                    context,
+                    'The password provided is too weak.',
+                  );
+                }
               } on EmailAlreadyInUseAuthException {
-                await showErrorDialog(
-                  context,
-                  'The email provided is already in use.',
-                );
+                if (context.mounted) {
+                  await showErrorDialog(
+                    context,
+                    'The email provided is already in use.',
+                  );
+                }
               } on InvalidEmailAuthException {
-                await showErrorDialog(
-                  context,
-                  'The email provided is invalid.',
-                );
+                if (context.mounted) {
+                  await showErrorDialog(
+                    context,
+                    'The email provided is invalid.',
+                  );
+                }
               } on ChannelErrorAuthException {
-                await showErrorDialog(
-                  context,
-                  'Email and password are required.',
-                );
+                if (context.mounted) {
+                  await showErrorDialog(
+                    context,
+                    'Email and password are required.',
+                  );
+                }
               } on GenericAuthException {
-                await showErrorDialog(
-                  context,
-                  'An error occurred while trying to register.',
-                );
+                if (context.mounted) {
+                  await showErrorDialog(
+                    context,
+                    'An error occurred while trying to register.',
+                  );
+                }
               }
             },
             child: const Text('Register'),

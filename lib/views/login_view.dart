@@ -66,37 +66,47 @@ class _LoginViewState extends State<LoginView> {
                   password: password,
                 );
                 final user = AuthService.firebase().currentUser;
-                if (user?.isEmailVerified ?? false) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    notesRoute,
-                    (_) => false,
-                  );
-                } else {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    verifyEmailRoute,
-                    (_) => false,
-                  );
+                if (context.mounted) {
+                  if (user?.isEmailVerified ?? false) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      notesRoute,
+                      (_) => false,
+                    );
+                  } else {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      verifyEmailRoute,
+                      (_) => false,
+                    );
+                  }
                 }
               } on InvalidCredentialAuthException {
-                await showErrorDialog(
-                  context,
-                  'Wrong credentials provided.',
-                );
+                if (context.mounted) {
+                  await showErrorDialog(
+                    context,
+                    'Wrong credentials provided.',
+                  );
+                }
               } on InvalidEmailAuthException {
-                await showErrorDialog(
-                  context,
-                  'The email provided is invalid.',
-                );
+                if (context.mounted) {
+                  await showErrorDialog(
+                    context,
+                    'The email provided is invalid.',
+                  );
+                }
               } on ChannelErrorAuthException {
-                await showErrorDialog(
-                  context,
-                  'Email and password are required.',
-                );
+                if (context.mounted) {
+                  await showErrorDialog(
+                    context,
+                    'Email and password are required.',
+                  );
+                }
               } on GenericAuthException {
-                await showErrorDialog(
-                  context,
-                  'An error occurred while trying to log in.',
-                );
+                if (context.mounted) {
+                  await showErrorDialog(
+                    context,
+                    'An error occurred while trying to log in.',
+                  );
+                }
               }
             },
             child: const Text('Login'),
