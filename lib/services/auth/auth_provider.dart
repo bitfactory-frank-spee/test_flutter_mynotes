@@ -1,13 +1,13 @@
 import "package:test_flutter_mynotes/services/auth/auth_user.dart";
 
 abstract class AuthProvider {
-  Future<void> initialize();
-  AuthUser? get currentUser;
-  Future<AuthUser> logIn({
+  Future<AuthUser> createUser({
     required email,
     required password,
   });
-  Future<AuthUser> createUser({
+  AuthUser? get currentUser;
+  Future<void> initialize();
+  Future<AuthUser> logIn({
     required email,
     required password,
   });

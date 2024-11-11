@@ -8,13 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart'
 
 class FirebaseAuthProvider extends AuthProvider {
   @override
-  Future<void> initialize() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  }
-
-  @override
   Future<AuthUser> createUser({
     required email,
     required password,
@@ -51,6 +44,13 @@ class FirebaseAuthProvider extends AuthProvider {
   AuthUser? get currentUser {
     final user = FirebaseAuth.instance.currentUser;
     return user == null ? null : AuthUser.fromFirebase(user);
+  }
+
+  @override
+  Future<void> initialize() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
 
   @override
