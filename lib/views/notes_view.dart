@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:test_flutter_mynotes/constants/routes.dart';
-
-enum MenuAction { logout }
+import 'package:test_flutter_mynotes/enums/menu_action.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
