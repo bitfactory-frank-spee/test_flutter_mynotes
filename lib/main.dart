@@ -1,9 +1,7 @@
 import 'dart:developer' as devtools show log;
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:test_flutter_mynotes/constants/routes.dart';
-import 'package:test_flutter_mynotes/firebase_options.dart';
+import 'package:test_flutter_mynotes/services/auth/auth_service.dart';
 import 'package:test_flutter_mynotes/views/login_view.dart';
 import 'package:test_flutter_mynotes/views/notes_view.dart';
 import 'package:test_flutter_mynotes/views/register_view.dart';
@@ -35,9 +33,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      ),
+      future: AuthService.firebase().initialize(),
       builder: (context, snapshot) {
         if (snapshot.connectionState != ConnectionState.done) {
           return const Center(
@@ -45,9 +41,9 @@ class HomePage extends StatelessWidget {
           );
         }
 
-        var user = FirebaseAuth.instance.currentUser;
+        var user = AuthService.firebase().currentUser;
         if (user != null) {
-          if (user.emailVerified) {
+          if (user.isEmailVerified) {
             return const NotesView();
           } else {
             return const VerifyEmailView();
