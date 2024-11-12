@@ -1,8 +1,28 @@
 import 'package:flutter/foundation.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart'
-    show getApplicationDocumentsDirectory;
+    show MissingPlatformDirectoryException, getApplicationDocumentsDirectory;
 import 'package:path/path.dart' show join;
+
+class DatabaseAlreadyOpenException implements Exception {}
+
+class UnableToGetDocumentsDirectoryException implements Exception {}
+
+class NotesService {
+  Database? _db;
+
+  Future<void> open() async {
+    if (_db != null) throw DatabaseAlreadyOpenException();
+
+    try {
+      final docsPath = await getApplicationDocumentsDirectory();
+      final dbPath = join(docsPath.path, dbName);
+      _db = await openDatabase(dbPath);
+    } on MissingPlatformDirectoryException {
+      throw UnableToGetDocumentsDirectoryException();
+    }
+  }
+}
 
 @immutable
 class DatabaseUser {
@@ -59,6 +79,9 @@ class DatabaseNote {
   int get hashCode => id.hashCode;
 }
 
+const dbName = 'notes.db';
+const noteTable = 'note';
+const userTable = 'user';
 const idColumn = 'id';
 const emailColumn = 'email';
 const userIdColumn = 'user_id';
