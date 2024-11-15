@@ -92,7 +92,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Note'),
+        title: const Text('Note'),
       ),
       body: FutureBuilder(
           future: _createOrGetExistingNote(context),
@@ -107,13 +107,23 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
 
             return Padding(
               padding: const EdgeInsets.all(20.0),
-              child: TextField(
-                controller: _textController,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: const InputDecoration(
-                  hintText: 'Start typing your note...',
-                ),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: _textController,
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    decoration: const InputDecoration(
+                      hintText: 'Start typing your note...',
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Submit'),
+                  ),
+                ],
               ),
             );
           }),
