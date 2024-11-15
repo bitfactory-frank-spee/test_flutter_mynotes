@@ -136,7 +136,15 @@ class NotesService {
     await _ensureDbIsOpen();
     final db = _getDatabaseOrThrow();
 
-    final numberOfDeletions = await db.delete(noteTable);
+    if (_user == null) {
+      throw UserShouldBeSetBeforeReadingAllNotesException();
+    }
+
+    final numberOfDeletions = await db.delete(
+      noteTable,
+      where: '$userIdColumn = ?',
+      whereArgs: [_user!.id],
+    );
 
     _notes = [];
     _notesStreamController.add(_notes);
