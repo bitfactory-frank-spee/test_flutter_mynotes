@@ -3,6 +3,7 @@ import 'package:test_flutter_mynotes/constants/routes.dart';
 import 'package:test_flutter_mynotes/enums/menu_action.dart';
 import 'package:test_flutter_mynotes/services/auth/auth_service.dart';
 import 'package:test_flutter_mynotes/services/crud/notes_service.dart';
+import 'package:test_flutter_mynotes/utilities/dialogs/delete_dialog.dart';
 import 'package:test_flutter_mynotes/utilities/dialogs/logout_dialog.dart';
 import 'package:test_flutter_mynotes/views/notes/notes_list_view.dart';
 
@@ -38,6 +39,12 @@ class _NotesViewState extends State<NotesView> {
           ),
           PopupMenuButton<MenuAction>(onSelected: (value) async {
             switch (value) {
+              case MenuAction.deleteAllNotes:
+                final shouldDelete = await showDeleteDialog(context);
+                if (shouldDelete) {
+                  await _notesService.deleteAllNotes();
+                }
+                break;
               case MenuAction.logout:
                 final shouldLogout = await showLogOutDialog(context);
                 if (shouldLogout) {
@@ -52,6 +59,10 @@ class _NotesViewState extends State<NotesView> {
             }
           }, itemBuilder: (context) {
             return const [
+              PopupMenuItem<MenuAction>(
+                value: MenuAction.deleteAllNotes,
+                child: Text('Delete all notes'),
+              ),
               PopupMenuItem<MenuAction>(
                 value: MenuAction.logout,
                 child: Text('Log out'),
