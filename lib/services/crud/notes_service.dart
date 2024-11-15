@@ -59,7 +59,6 @@ class NotesService {
         textColumn: text,
         isSyncedWithCloudColumn: 0,
       },
-      // TODO: this should be added, but the tutorial doesn't mention it
       where: '$idColumn = ?',
       whereArgs: [note.id],
     );
