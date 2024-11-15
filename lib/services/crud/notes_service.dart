@@ -124,6 +124,7 @@ class NotesService {
 
     final note = DatabaseNote.fromRow(notes.first);
 
+    // TODO: this is added in the tutorial but it is conflicting with the updateNote method.
     _notes.removeWhere((note) => note.id == id);
     _notes.add(note);
     _notesStreamController.add(_notes);
