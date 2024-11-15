@@ -60,8 +60,8 @@ class NotesService {
         isSyncedWithCloudColumn: 0,
       },
       // TODO: this should be added, but the tutorial doesn't mention it
-      // where: '$idColumn = ?',
-      // whereArgs: [note.id],
+      where: '$idColumn = ?',
+      whereArgs: [note.id],
     );
 
     if (updatesCount == 0) throw CouldNotUpdateNoteException();
