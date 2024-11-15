@@ -36,88 +36,93 @@ class _RegisterViewState extends State<RegisterView> {
       appBar: AppBar(
         title: const Text('Register'),
       ),
-      body: Column(
-        children: [
-          TextField(
-            controller: _email,
-            enableSuggestions: false,
-            autocorrect: false,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              hintText: 'Enter your email here',
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            const Spacer(),
+            TextField(
+              controller: _email,
+              enableSuggestions: false,
+              autocorrect: false,
+              keyboardType: TextInputType.emailAddress,
+              decoration: const InputDecoration(
+                hintText: 'Enter your email here',
+              ),
             ),
-          ),
-          TextField(
-            controller: _password,
-            obscureText: true,
-            enableSuggestions: false,
-            autocorrect: false,
-            decoration: const InputDecoration(
-              hintText: 'Enter your password here',
+            TextField(
+              controller: _password,
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration: const InputDecoration(
+                hintText: 'Enter your password here',
+              ),
             ),
-          ),
-          TextButton(
-            onPressed: () async {
-              final email = _email.text;
-              final password = _password.text;
-              try {
-                await AuthService.firebase().createUser(
-                  email: email,
-                  password: password,
+            TextButton(
+              onPressed: () async {
+                final email = _email.text;
+                final password = _password.text;
+                try {
+                  await AuthService.firebase().createUser(
+                    email: email,
+                    password: password,
+                  );
+                  await AuthService.firebase().sendEmailVerification();
+                  if (context.mounted) {
+                    Navigator.of(context).pushNamed(verifyEmailRoute);
+                  }
+                } on WeakPasswordAuthException {
+                  if (context.mounted) {
+                    await showErrorDialog(
+                      context,
+                      'The password provided is too weak.',
+                    );
+                  }
+                } on EmailAlreadyInUseAuthException {
+                  if (context.mounted) {
+                    await showErrorDialog(
+                      context,
+                      'The email provided is already in use.',
+                    );
+                  }
+                } on InvalidEmailAuthException {
+                  if (context.mounted) {
+                    await showErrorDialog(
+                      context,
+                      'The email provided is invalid.',
+                    );
+                  }
+                } on ChannelErrorAuthException {
+                  if (context.mounted) {
+                    await showErrorDialog(
+                      context,
+                      'Email and password are required.',
+                    );
+                  }
+                } on GenericAuthException {
+                  if (context.mounted) {
+                    await showErrorDialog(
+                      context,
+                      'An error occurred while trying to register.',
+                    );
+                  }
+                }
+              },
+              child: const Text('Register'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  loginRoute,
+                  (route) => false,
                 );
-                await AuthService.firebase().sendEmailVerification();
-                if (context.mounted) {
-                  Navigator.of(context).pushNamed(verifyEmailRoute);
-                }
-              } on WeakPasswordAuthException {
-                if (context.mounted) {
-                  await showErrorDialog(
-                    context,
-                    'The password provided is too weak.',
-                  );
-                }
-              } on EmailAlreadyInUseAuthException {
-                if (context.mounted) {
-                  await showErrorDialog(
-                    context,
-                    'The email provided is already in use.',
-                  );
-                }
-              } on InvalidEmailAuthException {
-                if (context.mounted) {
-                  await showErrorDialog(
-                    context,
-                    'The email provided is invalid.',
-                  );
-                }
-              } on ChannelErrorAuthException {
-                if (context.mounted) {
-                  await showErrorDialog(
-                    context,
-                    'Email and password are required.',
-                  );
-                }
-              } on GenericAuthException {
-                if (context.mounted) {
-                  await showErrorDialog(
-                    context,
-                    'An error occurred while trying to register.',
-                  );
-                }
-              }
-            },
-            child: const Text('Register'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamedAndRemoveUntil(
-                loginRoute,
-                (route) => false,
-              );
-            },
-            child: const Text('Already registered? Login here!'),
-          ),
-        ],
+              },
+              child: const Text('Already registered? Login here!'),
+            ),
+            const Spacer(),
+          ],
+        ),
       ),
     );
   }
