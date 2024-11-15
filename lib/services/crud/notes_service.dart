@@ -5,12 +5,15 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart'
     show MissingPlatformDirectoryException, getApplicationDocumentsDirectory;
 import 'package:path/path.dart' show join;
+import 'package:test_flutter_mynotes/extensions/list/filter.dart';
 import 'package:test_flutter_mynotes/services/crud/crud_exceptions.dart';
 
 class NotesService {
   Database? _db;
 
   List<DatabaseNote> _notes = [];
+
+  DatabaseUser? _user;
 
   // Singleton way of work
   static final NotesService _shared = NotesService._sharedInstance();
@@ -25,13 +28,33 @@ class NotesService {
 
   late final StreamController<List<DatabaseNote>> _notesStreamController;
 
-  Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
+  Stream<List<DatabaseNote>> get allNotes =>
+      _notesStreamController.stream.filter((note) {
+        final currentUser = _user;
 
-  Future<DatabaseUser> getOrCreateUser({required String email}) async {
+        if (currentUser == null) {
+          throw UserShouldBeSetBeforeReadingAllNotesException();
+        }
+
+        return note.userId == currentUser.id;
+      });
+
+  Future<DatabaseUser> getOrCreateUser({
+    required String email,
+    bool setAsCurrentUser = true,
+  }) async {
     try {
-      return await getUser(email: email);
+      final user = await getUser(email: email);
+      if (setAsCurrentUser) {
+        _user = user;
+      }
+      return user;
     } on CouldNotFindUserException {
-      return createUser(email: email);
+      final createdUser = await createUser(email: email);
+      if (setAsCurrentUser) {
+        _user = createdUser;
+      }
+      return createdUser;
     } catch (e) {
       rethrow;
     }
