@@ -6,6 +6,28 @@ import 'package:test_flutter_mynotes/services/cloud/cloud_storage_exceptions.dar
 class FirebaseCloudStorage {
   final notes = FirebaseFirestore.instance.collection('notes');
 
+  Future<void> deleteAllNotes({
+    required String ownerUserId,
+  }) async {
+    WriteBatch batch = FirebaseFirestore.instance.batch();
+    try {
+      await notes
+          .where(
+            ownerUserIdFieldName,
+            isEqualTo: ownerUserId,
+          )
+          .get()
+          .then((querySnapshot) => {
+                for (final document in querySnapshot.docs)
+                  {batch.delete(document.reference)}
+              });
+
+      batch.commit();
+    } catch (error) {
+      throw CouldNotDeleteNoteException();
+    }
+  }
+
   Future<void> deleteNote({
     required String documentId,
   }) async {

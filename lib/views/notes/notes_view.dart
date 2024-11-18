@@ -40,11 +40,10 @@ class _NotesViewState extends State<NotesView> {
           PopupMenuButton<MenuAction>(onSelected: (value) async {
             switch (value) {
               case MenuAction.deleteAllNotes:
-                // TODO: re-implement deleteAllNotes
-                //   final shouldDelete = await showDeleteDialog(context);
-                //   if (shouldDelete) {
-                //     await _notesService.deleteAllNotes();
-                //   }
+                final shouldDelete = await showDeleteDialog(context);
+                if (shouldDelete) {
+                  await _notesService.deleteAllNotes(ownerUserId: userId);
+                }
                 break;
               case MenuAction.logout:
                 final shouldLogout = await showLogOutDialog(context);
