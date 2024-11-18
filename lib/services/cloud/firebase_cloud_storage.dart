@@ -29,7 +29,9 @@ class FirebaseCloudStorage {
     }
   }
 
-  Stream<Iterable<CloudNote>> allNotes({required String ownerUserId}) =>
+  Stream<Iterable<CloudNote>> allNotes({
+    required String ownerUserId,
+  }) =>
       notes.snapshots().map((event) => event.docs
           .map((doc) => CloudNote.fromSnapshot(doc))
           .where((note) => note.ownerUserId == ownerUserId));
@@ -50,7 +52,9 @@ class FirebaseCloudStorage {
     }
   }
 
-  Future<CloudNote> createNewNote({required String ownerUserId}) async {
+  Future<CloudNote> createNewNote({
+    required String ownerUserId,
+  }) async {
     final document = await notes.add({
       ownerUserIdFieldName: ownerUserId,
       textFieldName: '',
