@@ -4,6 +4,7 @@ import 'package:test_flutter_mynotes/constants/routes.dart';
 import 'package:test_flutter_mynotes/services/auth/auth_exceptions.dart';
 import 'package:test_flutter_mynotes/services/auth/bloc/auth_bloc.dart';
 import 'package:test_flutter_mynotes/services/auth/bloc/auth_event.dart';
+import 'package:test_flutter_mynotes/services/auth/bloc/auth_state.dart';
 import 'package:test_flutter_mynotes/utilities/dialogs/error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -60,48 +61,37 @@ class _LoginViewState extends State<LoginView> {
                 hintText: 'Enter your password here',
               ),
             ),
-            TextButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
-                try {
+            BlocListener<AuthBloc, AuthState>(
+              listener: (context, state) async {
+                if (state is AuthStateLoggedOut) {
+                  if (state.exception is InvalidCredentialAuthException) {
+                    await showErrorDialog(
+                        context, 'Wrong credentials provided.');
+                  } else if (state.exception is InvalidEmailAuthException) {
+                    await showErrorDialog(
+                        context, 'The email provided is invalid.');
+                  } else if (state.exception is ChannelErrorAuthException) {
+                    await showErrorDialog(
+                        context, 'Email and password are required.');
+                  } else if (state.exception is GenericAuthException) {
+                    await showErrorDialog(
+                        context, 'An error occurred while trying to log in.');
+                  }
+                }
+              },
+              child: TextButton(
+                onPressed: () async {
+                  final email = _email.text;
+                  final password = _password.text;
                   context.read<AuthBloc>().add(
                         AuthEventLogIn(
                           email,
                           password,
                         ),
                       );
-                } on InvalidCredentialAuthException {
-                  if (context.mounted) {
-                    await showErrorDialog(
-                      context,
-                      'Wrong credentials provided.',
-                    );
-                  }
-                } on InvalidEmailAuthException {
-                  if (context.mounted) {
-                    await showErrorDialog(
-                      context,
-                      'The email provided is invalid.',
-                    );
-                  }
-                } on ChannelErrorAuthException {
-                  if (context.mounted) {
-                    await showErrorDialog(
-                      context,
-                      'Email and password are required.',
-                    );
-                  }
-                } on GenericAuthException {
-                  if (context.mounted) {
-                    await showErrorDialog(
-                      context,
-                      'An error occurred while trying to log in.',
-                    );
-                  }
-                }
-              },
-              child: const Text('Login'),
+                },
+                child: const Text('Login'),
+              ),
             ),
             TextButton(
               onPressed: () {
