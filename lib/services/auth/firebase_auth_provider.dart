@@ -63,6 +63,7 @@ class FirebaseAuthProvider extends AuthProvider {
         email: email,
         password: password,
       );
+
       final user = currentUser;
       if (user == null) {
         throw UserNotLoggedInAuthException();
