@@ -5,7 +5,6 @@ import 'package:test_flutter_mynotes/services/auth/bloc/auth_bloc.dart';
 import 'package:test_flutter_mynotes/services/auth/bloc/auth_event.dart';
 import 'package:test_flutter_mynotes/services/auth/bloc/auth_state.dart';
 import 'package:test_flutter_mynotes/utilities/dialogs/error_dialog.dart';
-import 'package:test_flutter_mynotes/utilities/dialogs/loading_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -88,6 +87,12 @@ class _LoginViewState extends State<LoginView> {
                       );
                 },
                 child: const Text('Login'),
+              ),
+              TextButton(
+                onPressed: () {
+                  context.read<AuthBloc>().add(const AuthEventForgotPassword());
+                },
+                child: const Text('I forgot my password'),
               ),
               TextButton(
                 onPressed: () {
