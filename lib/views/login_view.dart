@@ -62,6 +62,7 @@ class _LoginViewState extends State<LoginView> {
                 const Center(
                   child: Image(
                     image: AssetImage('assets/bitfactory-logo-black.png'),
+                    height: 87.2,
                     width: 80.0,
                   ),
                 ),
