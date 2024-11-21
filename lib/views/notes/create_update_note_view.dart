@@ -120,33 +120,37 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
 
             _setupTextControllerListener();
 
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: _textController,
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    decoration: const InputDecoration(
-                      hintText: 'Start typing your note...',
-                    ),
-                  ),
-                  const SizedBox(height: 8.0),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      style: ButtonStyle(
-                        foregroundColor: WidgetStateProperty.all(Colors.white),
-                        backgroundColor: WidgetStateProperty.all(Colors.green),
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    TextField(
+                      controller: _textController,
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      decoration: const InputDecoration(
+                        hintText: 'Start typing your note...',
                       ),
-                      child: const Text('Save note'),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8.0),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ButtonStyle(
+                          foregroundColor:
+                              WidgetStateProperty.all(Colors.white),
+                          backgroundColor:
+                              WidgetStateProperty.all(Colors.green),
+                        ),
+                        child: const Text('Save note'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           }),

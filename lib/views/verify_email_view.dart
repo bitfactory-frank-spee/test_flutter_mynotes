@@ -32,56 +32,58 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
         appBar: AppBar(
           title: const Text('Verify Email'),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Spacer(),
-              const Text(
-                'We\'ve sent you an email verification. Please open it to verify your account.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18),
-              ),
-              const SizedBox(height: 16.0),
-              const Text(
-                'If you haven\'t received the email, please press the button below.',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18),
-              ),
-              const SizedBox(height: 24.0),
-              SizedBox(
-                width: double.infinity,
-                child: TextButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(
-                          const AuthEventSendEmailVerification(),
-                        );
-                  },
-                  style: ButtonStyle(
-                    foregroundColor: WidgetStateProperty.all(Colors.white),
-                    backgroundColor: WidgetStateProperty.all(Colors.green),
-                  ),
-                  child: const Text('Send email verification'),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Spacer(),
+                const Text(
+                  'We\'ve sent you an email verification. Please open it to verify your account.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18),
                 ),
-              ),
-              const SizedBox(height: 8.0),
-              SizedBox(
-                width: double.infinity,
-                child: TextButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(
-                          const AuthEventLogOut(),
-                        );
-                  },
-                  style: ButtonStyle(
-                    foregroundColor: WidgetStateProperty.all(Colors.blue),
-                  ),
-                  child: const Text('Already verified? Login'),
+                const SizedBox(height: 16.0),
+                const Text(
+                  'If you haven\'t received the email, please press the button below.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18),
                 ),
-              ),
-              const Spacer(),
-            ],
+                const SizedBox(height: 24.0),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () {
+                      context.read<AuthBloc>().add(
+                            const AuthEventSendEmailVerification(),
+                          );
+                    },
+                    style: ButtonStyle(
+                      foregroundColor: WidgetStateProperty.all(Colors.white),
+                      backgroundColor: WidgetStateProperty.all(Colors.green),
+                    ),
+                    child: const Text('Send email verification'),
+                  ),
+                ),
+                const SizedBox(height: 8.0),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () {
+                      context.read<AuthBloc>().add(
+                            const AuthEventLogOut(),
+                          );
+                    },
+                    style: ButtonStyle(
+                      foregroundColor: WidgetStateProperty.all(Colors.blue),
+                    ),
+                    child: const Text('Already verified? Login'),
+                  ),
+                ),
+                const Spacer(),
+              ],
+            ),
           ),
         ),
       ),
