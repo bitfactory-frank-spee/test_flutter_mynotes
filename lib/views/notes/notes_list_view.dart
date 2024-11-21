@@ -31,13 +31,14 @@ class NotesListView extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             trailing: IconButton(
-              icon: const Icon(Icons.delete),
+              icon: const Icon(Icons.delete_outline),
               onPressed: () async {
                 final shouldDelete = await showDeleteDialog(context);
                 if (shouldDelete) {
                   onDeleteNote(note);
                 }
               },
+              color: Colors.red[900],
             ),
           );
         });
