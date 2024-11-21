@@ -37,7 +37,8 @@ class _LoginViewState extends State<LoginView> {
       listener: (context, state) async {
         if (state is AuthStateLoggedOut) {
           if (state.exception is InvalidCredentialAuthException) {
-            await showErrorDialog(context, 'Wrong credentials provided.');
+            await showErrorDialog(
+                context, 'Cannot log in with the provided credentials.');
           } else if (state.exception is InvalidEmailAuthException) {
             await showErrorDialog(context, 'The email provided is invalid.');
           } else if (state.exception is ChannelErrorAuthException) {
@@ -50,13 +51,27 @@ class _LoginViewState extends State<LoginView> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Login'),
+          title: const Text('My Notes - Login'),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Spacer(),
+              const Center(
+                child: Image(
+                  image: AssetImage('assets/bitfactory-logo-black.png'),
+                  width: 80.0,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: Text(
+                  'Please log in to your account to interact with and create notes!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
               TextField(
                 controller: _email,
                 enableSuggestions: false,
@@ -66,6 +81,7 @@ class _LoginViewState extends State<LoginView> {
                   hintText: 'Enter your email here',
                 ),
               ),
+              const SizedBox(height: 8.0),
               TextField(
                 controller: _password,
                 obscureText: true,
@@ -75,32 +91,51 @@ class _LoginViewState extends State<LoginView> {
                   hintText: 'Enter your password here',
                 ),
               ),
-              TextButton(
-                onPressed: () async {
-                  final email = _email.text;
-                  final password = _password.text;
-                  context.read<AuthBloc>().add(
-                        AuthEventLogIn(
-                          email,
-                          password,
-                        ),
-                      );
-                },
-                child: const Text('Login'),
-              ),
+              const SizedBox(height: 8.0),
               TextButton(
                 onPressed: () {
                   context.read<AuthBloc>().add(const AuthEventForgotPassword());
                 },
+                style: ButtonStyle(
+                  foregroundColor: WidgetStateProperty.all(Colors.blue),
+                ),
                 child: const Text('I forgot my password'),
               ),
-              TextButton(
-                onPressed: () {
-                  context.read<AuthBloc>().add(const AuthEventShouldRegister());
-                },
-                child: const Text('Not registered yet? Register here!'),
-              ),
               const Spacer(),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () async {
+                    final email = _email.text;
+                    final password = _password.text;
+                    context.read<AuthBloc>().add(
+                          AuthEventLogIn(
+                            email,
+                            password,
+                          ),
+                        );
+                  },
+                  style: ButtonStyle(
+                    foregroundColor: WidgetStateProperty.all(Colors.white),
+                    backgroundColor: WidgetStateProperty.all(Colors.green),
+                  ),
+                  child: const Text('Login'),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {
+                    context
+                        .read<AuthBloc>()
+                        .add(const AuthEventShouldRegister());
+                  },
+                  style: ButtonStyle(
+                    foregroundColor: WidgetStateProperty.all(Colors.blue),
+                  ),
+                  child: const Text('Not registered yet? Register here!'),
+                ),
+              ),
             ],
           ),
         ),

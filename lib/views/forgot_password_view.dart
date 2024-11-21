@@ -53,12 +53,18 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
             title: const Text('Forgot Password'),
           ),
           body: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
                 const Spacer(),
-                const Text(
-                    'If you forgot your password, enter your email and we will send you a password reset link.'),
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Text(
+                    'If you forgot your password, enter your email and send a password reset link.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
                 TextField(
                   keyboardType: TextInputType.emailAddress,
                   autocorrect: false,
@@ -68,22 +74,36 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                     hintText: 'Your email address...',
                   ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    final email = _controller.text;
-                    context
-                        .read<AuthBloc>()
-                        .add(AuthEventForgotPassword(email: email));
-                  },
-                  child: const Text('Send my password reset link'),
+                const SizedBox(height: 8.0),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () {
+                      final email = _controller.text;
+                      context
+                          .read<AuthBloc>()
+                          .add(AuthEventForgotPassword(email: email));
+                    },
+                    style: ButtonStyle(
+                      foregroundColor: WidgetStateProperty.all(Colors.white),
+                      backgroundColor: WidgetStateProperty.all(Colors.green),
+                    ),
+                    child: const Text('Send my password reset link'),
+                  ),
                 ),
-                TextButton(
-                  onPressed: () {
-                    context.read<AuthBloc>().add(
-                          const AuthEventLogOut(),
-                        );
-                  },
-                  child: const Text('Back to login page'),
+                SizedBox(
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () {
+                      context.read<AuthBloc>().add(
+                            const AuthEventLogOut(),
+                          );
+                    },
+                    style: ButtonStyle(
+                      foregroundColor: WidgetStateProperty.all(Colors.blue),
+                    ),
+                    child: const Text('Back to login page'),
+                  ),
                 ),
                 const Spacer(),
               ],

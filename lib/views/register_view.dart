@@ -57,19 +57,30 @@ class _RegisterViewState extends State<RegisterView> {
           title: const Text('Register'),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Spacer(),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: Text(
+                  'Enter your email and a valid password to register your account',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
               TextField(
                 controller: _email,
                 enableSuggestions: false,
                 autocorrect: false,
+                autofocus: true,
                 keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   hintText: 'Enter your email here',
                 ),
               ),
+              const SizedBox(height: 8.0),
               TextField(
                 controller: _password,
                 obscureText: true,
@@ -79,27 +90,41 @@ class _RegisterViewState extends State<RegisterView> {
                   hintText: 'Enter your password here',
                 ),
               ),
-              TextButton(
-                onPressed: () {
-                  final email = _email.text;
-                  final password = _password.text;
+              const SizedBox(height: 8.0),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {
+                    final email = _email.text;
+                    final password = _password.text;
 
-                  context.read<AuthBloc>().add(
-                        AuthEventRegister(
-                          email,
-                          password,
-                        ),
-                      );
-                },
-                child: const Text('Register'),
+                    context.read<AuthBloc>().add(
+                          AuthEventRegister(
+                            email,
+                            password,
+                          ),
+                        );
+                  },
+                  style: ButtonStyle(
+                    foregroundColor: WidgetStateProperty.all(Colors.white),
+                    backgroundColor: WidgetStateProperty.all(Colors.green),
+                  ),
+                  child: const Text('Register'),
+                ),
               ),
-              TextButton(
-                onPressed: () {
-                  context.read<AuthBloc>().add(
-                        const AuthEventLogOut(),
-                      );
-                },
-                child: const Text('Already registered? Login here!'),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {
+                    context.read<AuthBloc>().add(
+                          const AuthEventLogOut(),
+                        );
+                  },
+                  style: ButtonStyle(
+                    foregroundColor: WidgetStateProperty.all(Colors.blue),
+                  ),
+                  child: const Text('Already registered? Login here!'),
+                ),
               ),
               const Spacer(),
             ],
