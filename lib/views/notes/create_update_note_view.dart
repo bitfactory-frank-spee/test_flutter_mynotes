@@ -121,7 +121,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
             _setupTextControllerListener();
 
             return Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
                   TextField(
@@ -132,11 +132,19 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                       hintText: 'Start typing your note...',
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Submit'),
+                  const SizedBox(height: 8.0),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: ButtonStyle(
+                        foregroundColor: WidgetStateProperty.all(Colors.white),
+                        backgroundColor: WidgetStateProperty.all(Colors.green),
+                      ),
+                      child: const Text('Save note'),
+                    ),
                   ),
                 ],
               ),

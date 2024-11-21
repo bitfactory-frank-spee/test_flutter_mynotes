@@ -32,7 +32,13 @@ class _NotesViewState extends State<NotesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your Notes'),
+        leading: const Padding(
+          padding: EdgeInsets.only(left: 16.0),
+          child: Image(
+            image: AssetImage('assets/bitfactory-logo-black.png'),
+          ),
+        ),
+        title: const Text('My Notes'),
         actions: [
           IconButton(
             onPressed: () {
