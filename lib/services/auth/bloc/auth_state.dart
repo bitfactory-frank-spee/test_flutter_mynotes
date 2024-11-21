@@ -49,7 +49,10 @@ class AuthStateLoggedIn extends AuthState {
 }
 
 class AuthStateNeedsVerification extends AuthState {
+  final Exception? exception;
+
   const AuthStateNeedsVerification({
+    required this.exception,
     required super.isLoading,
   });
 }

@@ -123,7 +123,7 @@ class _RegisterViewState extends State<RegisterView> {
                   style: ButtonStyle(
                     foregroundColor: WidgetStateProperty.all(Colors.blue),
                   ),
-                  child: const Text('Already registered? Login here!'),
+                  child: const Text('Already registered? Login'),
                 ),
               ),
               const Spacer(),

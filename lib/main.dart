@@ -1,4 +1,3 @@
-import 'dart:developer' as devtools show log;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_flutter_mynotes/constants/routes.dart';

@@ -7,6 +7,8 @@ class GenericAuthException implements Exception {}
 
 class UserNotLoggedInAuthException implements Exception {}
 
+class TooManyRequestsAuthException implements Exception {}
+
 // Login exceptions
 class InvalidCredentialAuthException implements Exception {}
 

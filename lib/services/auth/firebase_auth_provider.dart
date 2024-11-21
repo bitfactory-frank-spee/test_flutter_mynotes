@@ -100,7 +100,19 @@ class FirebaseAuthProvider extends AuthProvider {
     if (user == null) {
       throw UserNotLoggedInAuthException();
     }
-    await user.sendEmailVerification();
+
+    try {
+      await user.sendEmailVerification();
+    } on FirebaseAuthException catch (error) {
+      switch (error.code) {
+        case 'too-many-requests':
+          throw TooManyRequestsAuthException();
+        default:
+          throw GenericAuthException();
+      }
+    } catch (error) {
+      throw GenericAuthException();
+    }
   }
 
   @override
