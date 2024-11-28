@@ -28,7 +28,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:32929408261:android:54e908a6f0c9b3ea77c36c",
         "android_client_info": {
-          "package_name": "nl.bitfactory.test_flutter_mynotes"
+          "package_name": "nl.bitfactory.testFlutterMyNotes"
         }
       },
       "oauth_client": [],

@@ -1,4 +1,4 @@
-package nl.bitfactory.test_flutter_mynotes
+package nl.bitfactory.testFlutterMyNotes
 
 import io.flutter.embedding.android.FlutterActivity
 
