@@ -56,91 +56,93 @@ class _LoginViewState extends State<LoginView> {
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Center(
-                  child: Image(
-                    image: AssetImage('assets/bitfactory-logo-black.png'),
-                    height: 87.2,
-                    width: 80.0,
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
-                  child: Text(
-                    'Please log in to your account to interact with and create notes!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                TextField(
-                  controller: _email,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your email here',
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                TextField(
-                  controller: _password,
-                  obscureText: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your password here',
-                  ),
-                ),
-                const SizedBox(height: 8.0),
-                TextButton(
-                  onPressed: () {
-                    context
-                        .read<AuthBloc>()
-                        .add(const AuthEventForgotPassword());
-                  },
-                  style: ButtonStyle(
-                    foregroundColor: WidgetStateProperty.all(Colors.blue),
-                  ),
-                  child: const Text('I forgot my password'),
-                ),
-                const Spacer(),
-                SizedBox(
-                  width: double.infinity,
-                  child: TextButton(
-                    onPressed: () {
-                      final email = _email.text;
-                      final password = _password.text;
-                      context.read<AuthBloc>().add(
-                            AuthEventLogIn(
-                              email,
-                              password,
-                            ),
-                          );
-                    },
-                    style: ButtonStyle(
-                      foregroundColor: WidgetStateProperty.all(Colors.white),
-                      backgroundColor: WidgetStateProperty.all(Colors.green),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Center(
+                    child: Image(
+                      image: AssetImage('assets/bitfactory-logo-black.png'),
+                      height: 87.2,
+                      width: 80.0,
                     ),
-                    child: const Text('Login'),
                   ),
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: TextButton(
+                  const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16.0),
+                    child: Text(
+                      'Please log in to your account to interact with and create notes!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ),
+                  TextField(
+                    controller: _email,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter your email here',
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  TextField(
+                    controller: _password,
+                    obscureText: true,
+                    enableSuggestions: false,
+                    autocorrect: false,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter your password here',
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  TextButton(
                     onPressed: () {
                       context
                           .read<AuthBloc>()
-                          .add(const AuthEventShouldRegister());
+                          .add(const AuthEventForgotPassword());
                     },
                     style: ButtonStyle(
                       foregroundColor: WidgetStateProperty.all(Colors.blue),
                     ),
-                    child: const Text('Not registered yet? Register here!'),
+                    child: const Text('I forgot my password'),
                   ),
-                ),
-              ],
+                  const Spacer(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: () {
+                        final email = _email.text;
+                        final password = _password.text;
+                        context.read<AuthBloc>().add(
+                              AuthEventLogIn(
+                                email,
+                                password,
+                              ),
+                            );
+                      },
+                      style: ButtonStyle(
+                        foregroundColor: WidgetStateProperty.all(Colors.white),
+                        backgroundColor: WidgetStateProperty.all(Colors.green),
+                      ),
+                      child: const Text('Login'),
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: TextButton(
+                      onPressed: () {
+                        context
+                            .read<AuthBloc>()
+                            .add(const AuthEventShouldRegister());
+                      },
+                      style: ButtonStyle(
+                        foregroundColor: WidgetStateProperty.all(Colors.blue),
+                      ),
+                      child: const Text('Not registered yet? Register here!'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

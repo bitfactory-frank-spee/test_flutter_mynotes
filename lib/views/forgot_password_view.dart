@@ -55,59 +55,63 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  const Spacer(),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16.0),
-                    child: Text(
-                      'If you forgot your password, enter your email and send a password reset link.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                  TextField(
-                    keyboardType: TextInputType.emailAddress,
-                    autocorrect: false,
-                    autofocus: true,
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      hintText: 'Your email address...',
-                    ),
-                  ),
-                  const SizedBox(height: 8.0),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextButton(
-                      onPressed: () {
-                        final email = _controller.text;
-                        context
-                            .read<AuthBloc>()
-                            .add(AuthEventForgotPassword(email: email));
-                      },
-                      style: ButtonStyle(
-                        foregroundColor: WidgetStateProperty.all(Colors.white),
-                        backgroundColor: WidgetStateProperty.all(Colors.green),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const Spacer(),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      child: Text(
+                        'If you forgot your password, enter your email and send a password reset link.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 18),
                       ),
-                      child: const Text('Send my password reset link'),
                     ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: TextButton(
-                      onPressed: () {
-                        context.read<AuthBloc>().add(
-                              const AuthEventLogOut(),
-                            );
-                      },
-                      style: ButtonStyle(
-                        foregroundColor: WidgetStateProperty.all(Colors.blue),
+                    TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      autocorrect: false,
+                      autofocus: true,
+                      controller: _controller,
+                      decoration: const InputDecoration(
+                        hintText: 'Your email address...',
                       ),
-                      child: const Text('Back to login page'),
                     ),
-                  ),
-                  const Spacer(),
-                ],
+                    const SizedBox(height: 8.0),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        onPressed: () {
+                          final email = _controller.text;
+                          context
+                              .read<AuthBloc>()
+                              .add(AuthEventForgotPassword(email: email));
+                        },
+                        style: ButtonStyle(
+                          foregroundColor:
+                              WidgetStateProperty.all(Colors.white),
+                          backgroundColor:
+                              WidgetStateProperty.all(Colors.green),
+                        ),
+                        child: const Text('Send my password reset link'),
+                      ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(
+                        onPressed: () {
+                          context.read<AuthBloc>().add(
+                                const AuthEventLogOut(),
+                              );
+                        },
+                        style: ButtonStyle(
+                          foregroundColor: WidgetStateProperty.all(Colors.blue),
+                        ),
+                        child: const Text('Back to login page'),
+                      ),
+                    ),
+                    const Spacer(),
+                  ],
+                ),
               ),
             ),
           )),
