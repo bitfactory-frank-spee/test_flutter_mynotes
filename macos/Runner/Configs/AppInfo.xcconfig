@@ -8,7 +8,7 @@
 PRODUCT_NAME = test_flutter_mynotes
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = nl.bitfactory.testFlutterMynotes
+PRODUCT_BUNDLE_IDENTIFIER = nl.bitfactory.testFlutterMyNotes
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2024 nl.bitfactory. All rights reserved.
