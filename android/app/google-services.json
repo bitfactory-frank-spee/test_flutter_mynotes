@@ -26,9 +26,28 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:32929408261:android:54e908a6f0c9b3ea77c36c",
+        "mobilesdk_app_id": "1:32929408261:android:8b9adcdff83167aa77c36c",
         "android_client_info": {
           "package_name": "nl.bitfactory.testFlutterMyNotes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBksDphnlNWSXPRTrpdx4EjiUzykVV1fB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32929408261:android:54e908a6f0c9b3ea77c36c",
+        "android_client_info": {
+          "package_name": "nl.bitfactory.test_flutter_mynotes"
         }
       },
       "oauth_client": [],

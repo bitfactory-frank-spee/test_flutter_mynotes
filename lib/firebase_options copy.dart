@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,9 +28,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -42,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBksDphnlNWSXPRTrpdx4EjiUzykVV1fB8',
-    appId: '1:32929408261:android:8b9adcdff83167aa77c36c',
+    appId: '1:32929408261:android:54e908a6f0c9b3ea77c36c',
     messagingSenderId: '32929408261',
     projectId: 'test-flutter-mynotes-e9f1c',
     storageBucket: 'test-flutter-mynotes-e9f1c.firebasestorage.app',
@@ -50,39 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCN1oSivg1KM3eZJN50jF2AE3yw84L0uVs',
-    appId: '1:32929408261:ios:6c7aff71f915519177c36c',
+    appId: '1:32929408261:ios:b00572f6a010cde577c36c',
     messagingSenderId: '32929408261',
     projectId: 'test-flutter-mynotes-e9f1c',
     storageBucket: 'test-flutter-mynotes-e9f1c.firebasestorage.app',
-    iosBundleId: 'nl.bitfactory.testFlutterMyNotes',
+    iosBundleId: 'testFlutterMyNotes',
   );
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCupDIpIEHDbwI-vZX62uaIO5o7yldVxaE',
-    appId: '1:32929408261:web:d396aad9e7076dd277c36c',
-    messagingSenderId: '32929408261',
-    projectId: 'test-flutter-mynotes-e9f1c',
-    authDomain: 'test-flutter-mynotes-e9f1c.firebaseapp.com',
-    storageBucket: 'test-flutter-mynotes-e9f1c.firebasestorage.app',
-    measurementId: 'G-906PQE0RJ1',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCN1oSivg1KM3eZJN50jF2AE3yw84L0uVs',
-    appId: '1:32929408261:ios:6c7aff71f915519177c36c',
-    messagingSenderId: '32929408261',
-    projectId: 'test-flutter-mynotes-e9f1c',
-    storageBucket: 'test-flutter-mynotes-e9f1c.firebasestorage.app',
-    iosBundleId: 'nl.bitfactory.testFlutterMyNotes',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCupDIpIEHDbwI-vZX62uaIO5o7yldVxaE',
-    appId: '1:32929408261:web:0a189a11047c2be377c36c',
-    messagingSenderId: '32929408261',
-    projectId: 'test-flutter-mynotes-e9f1c',
-    authDomain: 'test-flutter-mynotes-e9f1c.firebaseapp.com',
-    storageBucket: 'test-flutter-mynotes-e9f1c.firebasestorage.app',
-    measurementId: 'G-B3HGB81E87',
-  );
 }
