@@ -12,13 +12,25 @@ import 'package:test_flutter_mynotes/views/notes/create_update_note_view.dart';
 import 'package:test_flutter_mynotes/views/notes/notes_view.dart';
 import 'package:test_flutter_mynotes/views/register_view.dart';
 import 'package:test_flutter_mynotes/views/verify_email_view.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MaterialApp(
-      title: 'BF MyNotes',
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('sv'),
+      ],
+      title: 'BF MyNotes',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
