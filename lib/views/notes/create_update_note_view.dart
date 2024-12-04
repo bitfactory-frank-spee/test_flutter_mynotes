@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:test_flutter_mynotes/extensions/buildcontext/loc.dart';
 import 'package:test_flutter_mynotes/services/auth/auth_service.dart';
 import 'package:test_flutter_mynotes/services/cloud/cloud_note.dart';
 import 'package:test_flutter_mynotes/services/cloud/firebase_cloud_storage.dart';
@@ -94,7 +95,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Note'),
+        title: Text(context.loc.note),
         actions: [
           IconButton(
             icon: const Icon(Icons.share),
@@ -129,8 +130,8 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                       controller: _textController,
                       keyboardType: TextInputType.multiline,
                       maxLines: null,
-                      decoration: const InputDecoration(
-                        hintText: 'Start typing your note...',
+                      decoration: InputDecoration(
+                        hintText: context.loc.start_typing_your_note,
                       ),
                     ),
                     const SizedBox(height: 8.0),
@@ -146,7 +147,9 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                           backgroundColor:
                               WidgetStateProperty.all(Colors.green),
                         ),
-                        child: const Text('Save note'),
+                        child: Text(
+                          context.loc.note_view_save,
+                        ),
                       ),
                     ),
                   ],

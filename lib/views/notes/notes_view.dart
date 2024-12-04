@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_flutter_mynotes/constants/routes.dart';
 import 'package:test_flutter_mynotes/enums/menu_action.dart';
+import 'package:test_flutter_mynotes/extensions/buildcontext/loc.dart';
 import 'package:test_flutter_mynotes/services/auth/auth_service.dart';
 import 'package:test_flutter_mynotes/services/auth/bloc/auth_bloc.dart';
 import 'package:test_flutter_mynotes/services/auth/bloc/auth_event.dart';
@@ -10,6 +13,10 @@ import 'package:test_flutter_mynotes/services/cloud/firebase_cloud_storage.dart'
 import 'package:test_flutter_mynotes/utilities/dialogs/delete_dialog.dart';
 import 'package:test_flutter_mynotes/utilities/dialogs/logout_dialog.dart';
 import 'package:test_flutter_mynotes/views/notes/notes_list_view.dart';
+
+extension Count<T extends Iterable> on Stream<T> {
+  Stream<int> get getLength => map((event) => event.length);
+}
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -38,7 +45,19 @@ class _NotesViewState extends State<NotesView> {
             image: AssetImage('assets/bitfactory-logo-black.png'),
           ),
         ),
-        title: const Text('My Notes'),
+        title: StreamBuilder(
+          stream: _notesService.allNotes(ownerUserId: userId).getLength,
+          builder: (context, AsyncSnapshot<int> snapshot) {
+            if (snapshot.hasData) {
+              final noteCount = snapshot.data ?? 0;
+              return Text(
+                context.loc.notes_title(noteCount),
+              );
+            } else {
+              return const Text('');
+            }
+          },
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -63,14 +82,18 @@ class _NotesViewState extends State<NotesView> {
                 }
             }
           }, itemBuilder: (context) {
-            return const [
+            return [
               PopupMenuItem<MenuAction>(
                 value: MenuAction.deleteAllNotes,
-                child: Text('Delete all notes'),
+                child: Text(
+                  context.loc.delete_all_notes,
+                ),
               ),
               PopupMenuItem<MenuAction>(
                 value: MenuAction.logout,
-                child: Text('Log out'),
+                child: Text(
+                  context.loc.logout_button,
+                ),
               ),
             ];
           }),

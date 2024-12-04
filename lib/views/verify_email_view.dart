@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_flutter_mynotes/extensions/buildcontext/loc.dart';
 import 'package:test_flutter_mynotes/services/auth/auth_exceptions.dart';
 import 'package:test_flutter_mynotes/services/auth/bloc/auth_bloc.dart';
 import 'package:test_flutter_mynotes/services/auth/bloc/auth_event.dart';
@@ -20,17 +21,21 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
       listener: (context, state) async {
         if (state is AuthStateNeedsVerification) {
           if (state.exception is TooManyRequestsAuthException) {
-            await showErrorDialog(context,
-                'There are too many requests. Please try again later.');
+            await showErrorDialog(
+              context,
+              context.loc.verify_email_error_requests,
+            );
           } else if (state.exception is GenericAuthException) {
-            await showErrorDialog(context,
-                'An error occurred while trying to send a verification email.');
+            await showErrorDialog(
+              context,
+              context.loc.verify_email_error_generic,
+            );
           }
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Verify Email'),
+          title: Text(context.loc.verify_email),
         ),
         body: SafeArea(
           child: Padding(
@@ -39,16 +44,10 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Spacer(),
-                const Text(
-                  'We\'ve sent you an email verification. Please open it to verify your account.',
+                Text(
+                  context.loc.verify_email_view_prompt,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 16.0),
-                const Text(
-                  'If you haven\'t received the email, please press the button below.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 24.0),
                 SizedBox(
@@ -63,7 +62,9 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                       foregroundColor: WidgetStateProperty.all(Colors.white),
                       backgroundColor: WidgetStateProperty.all(Colors.green),
                     ),
-                    child: const Text('Send email verification'),
+                    child: Text(
+                      context.loc.verify_email_send_email_verification,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8.0),
@@ -78,7 +79,9 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                     style: ButtonStyle(
                       foregroundColor: WidgetStateProperty.all(Colors.blue),
                     ),
-                    child: const Text('Already verified? Login'),
+                    child: Text(
+                      context.loc.restart,
+                    ),
                   ),
                 ),
                 const Spacer(),

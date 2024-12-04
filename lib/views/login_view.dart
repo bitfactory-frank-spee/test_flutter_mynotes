@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_flutter_mynotes/extensions/buildcontext/loc.dart';
 import 'package:test_flutter_mynotes/services/auth/auth_exceptions.dart';
 import 'package:test_flutter_mynotes/services/auth/bloc/auth_bloc.dart';
 import 'package:test_flutter_mynotes/services/auth/bloc/auth_event.dart';
@@ -38,20 +39,30 @@ class _LoginViewState extends State<LoginView> {
         if (state is AuthStateLoggedOut) {
           if (state.exception is InvalidCredentialAuthException) {
             await showErrorDialog(
-                context, 'Cannot log in with the provided credentials.');
+              context,
+              context.loc.login_error_invalid_credential,
+            );
           } else if (state.exception is InvalidEmailAuthException) {
-            await showErrorDialog(context, 'The email provided is invalid.');
+            await showErrorDialog(
+              context,
+              context.loc.login_error_invalid_email,
+            );
           } else if (state.exception is ChannelErrorAuthException) {
-            await showErrorDialog(context, 'Email and password are required.');
+            await showErrorDialog(
+              context,
+              context.loc.error_channel_error,
+            );
           } else if (state.exception is GenericAuthException) {
             await showErrorDialog(
-                context, 'An error occurred while trying to log in.');
+              context,
+              context.loc.login_error_auth_error,
+            );
           }
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('My Notes - Login'),
+          title: Text(context.loc.login),
         ),
         body: SafeArea(
           child: Padding(
@@ -66,12 +77,12 @@ class _LoginViewState extends State<LoginView> {
                     width: 80.0,
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
-                    'Please log in to your account to interact with and create notes!',
+                    context.loc.login_view_prompt,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ),
                 TextField(
@@ -79,8 +90,8 @@ class _LoginViewState extends State<LoginView> {
                   enableSuggestions: false,
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your email here',
+                  decoration: InputDecoration(
+                    hintText: context.loc.email_text_field_placeholder,
                   ),
                 ),
                 const SizedBox(height: 8.0),
@@ -89,8 +100,8 @@ class _LoginViewState extends State<LoginView> {
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your password here',
+                  decoration: InputDecoration(
+                    hintText: context.loc.password_text_field_placeholder,
                   ),
                 ),
                 const SizedBox(height: 8.0),
@@ -103,7 +114,9 @@ class _LoginViewState extends State<LoginView> {
                   style: ButtonStyle(
                     foregroundColor: WidgetStateProperty.all(Colors.blue),
                   ),
-                  child: const Text('I forgot my password'),
+                  child: Text(
+                    context.loc.login_view_forgot_password,
+                  ),
                 ),
                 const Spacer(),
                 SizedBox(
@@ -137,7 +150,9 @@ class _LoginViewState extends State<LoginView> {
                     style: ButtonStyle(
                       foregroundColor: WidgetStateProperty.all(Colors.blue),
                     ),
-                    child: const Text('Not registered yet? Register here!'),
+                    child: Text(
+                      context.loc.login_view_not_registered_yet,
+                    ),
                   ),
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_flutter_mynotes/extensions/buildcontext/loc.dart';
 import 'package:test_flutter_mynotes/services/auth/auth_exceptions.dart';
 import 'package:test_flutter_mynotes/services/auth/bloc/auth_bloc.dart';
 import 'package:test_flutter_mynotes/services/auth/bloc/auth_event.dart';
@@ -38,23 +39,33 @@ class _RegisterViewState extends State<RegisterView> {
         if (state is AuthStateRegistering) {
           if (state.exception is WeakPasswordAuthException) {
             await showErrorDialog(
-                context, 'The password provided is too weak.');
+              context,
+              context.loc.register_error_weak_password,
+            );
           } else if (state.exception is EmailAlreadyInUseAuthException) {
             await showErrorDialog(
-                context, 'The email provided is already in use.');
+                context, context.loc.register_error_email_already_in_use);
           } else if (state.exception is InvalidEmailAuthException) {
-            await showErrorDialog(context, 'The email provided is invalid.');
+            await showErrorDialog(
+              context,
+              context.loc.register_error_invalid_email,
+            );
           } else if (state.exception is ChannelErrorAuthException) {
-            await showErrorDialog(context, 'Email and password are required.');
+            await showErrorDialog(
+              context,
+              context.loc.error_channel_error,
+            );
           } else if (state.exception is GenericAuthException) {
             await showErrorDialog(
-                context, 'An error occurred while trying to register.');
+              context,
+              context.loc.register_error_generic,
+            );
           }
         }
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Register'),
+          title: Text(context.loc.register),
         ),
         body: SafeArea(
           child: Padding(
@@ -63,12 +74,12 @@ class _RegisterViewState extends State<RegisterView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Spacer(),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Text(
-                    'Enter your email and a valid password to register your account',
+                    context.loc.register_view_prompt,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
                 ),
                 TextField(
@@ -77,8 +88,8 @@ class _RegisterViewState extends State<RegisterView> {
                   autocorrect: false,
                   autofocus: true,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your email here',
+                  decoration: InputDecoration(
+                    hintText: context.loc.email_text_field_placeholder,
                   ),
                 ),
                 const SizedBox(height: 8.0),
@@ -87,8 +98,8 @@ class _RegisterViewState extends State<RegisterView> {
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    hintText: 'Enter your password here',
+                  decoration: InputDecoration(
+                    hintText: context.loc.password_text_field_placeholder,
                   ),
                 ),
                 const SizedBox(height: 8.0),
@@ -110,7 +121,9 @@ class _RegisterViewState extends State<RegisterView> {
                       foregroundColor: WidgetStateProperty.all(Colors.white),
                       backgroundColor: WidgetStateProperty.all(Colors.green),
                     ),
-                    child: const Text('Register'),
+                    child: Text(
+                      context.loc.register,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -124,7 +137,9 @@ class _RegisterViewState extends State<RegisterView> {
                     style: ButtonStyle(
                       foregroundColor: WidgetStateProperty.all(Colors.blue),
                     ),
-                    child: const Text('Already registered? Login'),
+                    child: Text(
+                      context.loc.register_view_already_registered,
+                    ),
                   ),
                 ),
                 const Spacer(),
